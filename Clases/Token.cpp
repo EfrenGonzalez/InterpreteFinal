@@ -1,3 +1,4 @@
+#include <bits/stdc++.h>
 #include "Token.h"
 
 Token::Token()
