@@ -10,12 +10,9 @@ Token::~Token()
     //dtor
 }
 
-Token::Token(int n, string s)
+Token::Token(int n, string tipo, string nombre)
 {
     Valor=n;
-    Tipo=s;
+    Tipo=tipo;
+    Nombre=nombre;
 }
-
-
-
-
