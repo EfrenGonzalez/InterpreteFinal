@@ -8,7 +8,8 @@ class Token
     public:
         int Valor;
         string Tipo;
-        Token(int,string);
+        string Nombre;
+        Token(int,string,string);
         Token();
         virtual ~Token();
     protected:
