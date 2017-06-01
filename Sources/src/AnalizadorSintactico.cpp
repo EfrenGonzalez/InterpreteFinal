@@ -14,48 +14,48 @@ AnalizadorSintactico::~AnalizadorSintactico()
 }
 
 void AnalizadorSintactico::declarar() {
-    mapa["repetir"]=Token(44,"Estructura de control");
-    mapa["mientras"]=Token(45,"Estructura de control");
-    mapa["si"]=Token(41,"Estructura de control");
-    mapa["sino"]=Token(42,"Estructura de control");
-    mapa["trastrueco"]=Token(43,"Estructura de control");
+    mapa["repetir"]=Token(44,"Estructura de control","repetir");
+    mapa["mientras"]=Token(45,"Estructura de control","mientras");
+    mapa["si"]=Token(41,"Estructura de control","si");
+    mapa["sino"]=Token(42,"Estructura de control","sino");
+    mapa["trastrueco"]=Token(43,"Estructura de control","transtrueco");
 
-    mapa["true"]=Token(32,"Verdadero");
-    mapa["false"]=Token(33,"Falso");
+    mapa["verdadero"]=Token(32,"Verdadero","verdadero");
+    mapa["falso"]=Token(33,"Falso","falso");
 
-    mapa["entero"]=Token(20,"Identificador");
-    mapa["boleano"]=Token(22,"Identificador");
-    mapa["flotante"]=Token(21,"Identificador");
-    mapa["cadena"]=Token(23,"Identificador");
+    mapa["entero"]=Token(20,"Tipo de dato","entero");
+    mapa["boleano"]=Token(22,"Tipo de dato","boleano");
+    mapa["flotante"]=Token(21,"Tipo de dato","flotante");
+    mapa["cadena"]=Token(23,"Tipo de dato","cadena");
 
-    mapa["imprimir"]=Token(1,"Identificador");
-    mapa["leer"]=Token(2,"Identificador");
+    mapa["imprimir"]=Token(1,"Identificador","imprimir");
+    mapa["leer"]=Token(2,"Identificador","leer");
 
-    mapa["+"]=Token(7,"Operador Aritmetico");
-    mapa["-"]=Token(7,"Operador Aritmetico");
-    mapa["*"]=Token(7,"Operador Aritmetico");
-    mapa["/"]=Token(7,"Operador Aritmetico");
-    mapa["="]=Token(6,"Operador Logico");
-    mapa["<"]=Token(6,"Operador Logico");
-    mapa[">"]=Token(6,"Operador Logico");
-    mapa["!"]=Token(6,"Operador Logico");
-    mapa["&"]=Token(7,"Operador Aritmetico");
-    mapa["|"]=Token(7,"Operador Aritmetico");
-    mapa["^"]=Token(7,"Operador Aritmetico");
-    mapa["&&"]=Token(6,"Operador Logico");
-    mapa["||"]=Token(6,"Operador Logico");
-    mapa["=="]=Token(8,"Operador Relacional");
-    mapa[">="]=Token(8,"Operador Relacional");
-    mapa["<="]=Token(8,"Operador Relacional");
-    mapa["!="]=Token(8,"Operador Relacional");
-    mapa[":"]=Token(8,"Operador Relacional");
+    mapa["+"]=Token(7,"Operador Aritmetico","+");
+    mapa["-"]=Token(7,"Operador Aritmetico","-");
+    mapa["*"]=Token(7,"Operador Aritmetico","*");
+    mapa["/"]=Token(7,"Operador Aritmetico","/");
+    mapa["="]=Token(6,"Operador Logico","=");
+    mapa["<"]=Token(6,"Operador Logico","<");
+    mapa[">"]=Token(6,"Operador Logico",">");
+    mapa["!"]=Token(6,"Operador Logico","!");
+    mapa["&"]=Token(7,"Operador Aritmetico","&");
+    mapa["|"]=Token(7,"Operador Aritmetico","|");
+    mapa["^"]=Token(7,"Operador Aritmetico","^");
+    mapa["&&"]=Token(6,"Operador Logico","&&");
+    mapa["||"]=Token(6,"Operador Logico","||");
+    mapa["=="]=Token(8,"Operador Relacional","==");
+    mapa[">="]=Token(8,"Operador Relacional",">=");
+    mapa["<="]=Token(8,"Operador Relacional","<=);
+    mapa["!="]=Token(8,"Operador Relacional","!=");
+    mapa[":"]=Token(8,"Operador Relacional",":");
 
-    mapa[";"]=Token(5,"Agrupación");
+    mapa[";"]=Token(5,"AgrupaciÃ³n",";");
 
-    mapa["("] = Token(5,"Agrupacion");
-    mapa[")"] = Token(5,"Agrupacion");
-    mapa["{"] = Token(5,"Agrupacion");
-    mapa["}"] = Token(5,"Agrupacion");
+    mapa["("] = Token(5,"Agrupacion"."(");
+    mapa[")"] = Token(5,"Agrupacion",")");
+    mapa["{"] = Token(5,"Agrupacion","{");
+    mapa["}"] = Token(5,"Agrupacion","}");
 }
 
 void AnalizadorSintactico::AnalizadorLexico(){
@@ -68,11 +68,10 @@ void AnalizadorSintactico::AnalizadorLexico(){
         {
             if (s[0]=='"')
             {
-                for(int i=1;i<s.length();i++){
-                    if(s.at(i)!='"'){
-                        pal = pal+s.at(i);
-                    }
-                }
+                bool wii=true;
+                for(int i=1;i<s.length()-1;i++)
+                    if (s[i]=='"') wii=false;
+                if (s[s.size()-1]!='"') wii=false;
                 cout<< pal << " - "<< "String"<<endl;
 
             }
@@ -90,7 +89,7 @@ void AnalizadorSintactico::AnalizadorLexico(){
                 for(int i=1;i<s.length();i++)
                     if (!((s[i]>='0' && s[i]<='9') || s[i]!='.')) wii=false;
                 for(int i=0;i<s.length();i++)
-                    if(s.at(i)=='.') err++;
+                    if(s[i]=='.') err++;
                 if (wii)
                 {
                     if(err==0){
