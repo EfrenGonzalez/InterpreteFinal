@@ -3,14 +3,17 @@
 #include "Instruccion.h"
 #include "Token.h"
 #include "Expresion.h"
+#include <bits/stdc++.h>
 
-class Asignacion :public Instruccion {
+class Asignacion : public Instruccion
+{
     public:
+        map<string,pair<int,string> >::iterator it;
         Asignacion();
         virtual ~Asignacion();
-        Token identificador;
+        Token variable;
         Expresion exp;
-        void imprimir();
+        void asignar(pair<bool,double>& inst,map<string,pair<int,string> >& tV,vector<Token>& Tokens,int& voy);
         void ejecutar();
     protected:
 
