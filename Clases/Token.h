@@ -1,6 +1,6 @@
 #ifndef TOKEN_H
 #define TOKEN_H
-#include <iostream>
+#include <bits/stdc++.h>
 
 using namespace std;
 class Token
