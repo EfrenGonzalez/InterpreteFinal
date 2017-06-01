@@ -1,21 +1,29 @@
-#ifndef DECLARACION_H
-#define DECLARACION_H
-#include "Instruccion.h"
-#include "Token.h"
+#include "string"
+#include "iostream"
+#include "Declaracion.h"
+#include <stdlib.h>
 
-class Declaracion : public Instruccion
+using namespace std;
+Declaracion::Declaracion()
 {
-    public:
-        Declaracion();
-        virtual ~Declaracion();
-        Declaracion(Token,Token);
-        void imprimir();
-        void ejecutar();
-        Token identificador;
-        Token tipo;
-    protected:
+    //ctor
+}
 
-    private:
-};
+Declaracion::~Declaracion()
+{
+    //dtor
+}
 
-#endif // DECLARACION_H
+void Declaracion::imprimir()
+{
+
+}
+
+void Declaracion::ejecutar(){
+
+}
+
+Declaracion::Declaracion(Token ti,Token ide){
+    this->tipo = ti;
+    identificador = ide;
+}
