@@ -1,3 +1,4 @@
+#include <bits/stdc++.h>
 #include "AnalizadorSintactico.h"
 #include "Token.h"
 
@@ -10,7 +11,7 @@ AnalizadorSintactico::AnalizadorSintactico() {
 
 AnalizadorSintactico::~AnalizadorSintactico()
 {
-    //dtor
+    mapa.clear();
 }
 
 void AnalizadorSintactico::declarar() {
@@ -20,8 +21,8 @@ void AnalizadorSintactico::declarar() {
     mapa["sino"]=Token(42,"Estructura de control","sino");
     mapa["trastrueco"]=Token(43,"Estructura de control","transtrueco");
 
-    mapa["verdadero"]=Token(32,"Verdadero","verdadero");
-    mapa["falso"]=Token(33,"Falso","falso");
+    mapa["verdadero"]=Token(32,"Valor","verdadero");
+    mapa["falso"]=Token(33,"Valor","falso");
 
     mapa["entero"]=Token(20,"Tipo de dato","entero");
     mapa["boleano"]=Token(22,"Tipo de dato","boleano");
@@ -46,38 +47,64 @@ void AnalizadorSintactico::declarar() {
     mapa["||"]=Token(6,"Operador Logico","||");
     mapa["=="]=Token(8,"Operador Relacional","==");
     mapa[">="]=Token(8,"Operador Relacional",">=");
-    mapa["<="]=Token(8,"Operador Relacional","<=);
+    mapa["<="]=Token(8,"Operador Relacional","<=");
     mapa["!="]=Token(8,"Operador Relacional","!=");
     mapa[":"]=Token(8,"Operador Relacional",":");
+
     mapa[";"]=Token(5,"Agrupación",";");
-    mapa["("] = Token(5,"Agrupacion"."(");
+
+    mapa["("] = Token(5,"Agrupacion","(");
     mapa[")"] = Token(5,"Agrupacion",")");
     mapa["{"] = Token(5,"Agrupacion","{");
     mapa["}"] = Token(5,"Agrupacion","}");
 }
-void AnalizadorSintactico::AnalizadorLexico(){
+
+vector<Token> AnalizadorSintactico::VectorSintatico(string archivo)
+{
+    vector<Token> Tokens;
+    char archivo1[100];
+    strcpy(archivo1, archivo.c_str());
+    freopen(archivo1,"r",stdin);
     string s; int err = 0; string pal;
     while (cin>>s)
     {
         it=mapa.find(s);
-        if (it!=mapa.end()) cout << s << " - " << mapa[s].Nombre << " "<<mapa[s].Valor<<endl;
+        if (it!=mapa.end()) Tokens.push_back(mapa[s]);
         else
         {
             if (s[0]=='"')
             {
                 bool wii=true;
-                for(int i=1;i<s.length()-1;i++)
-                    if (s[i]=='"') wii=false;
+                for(int i=1;i<s.length()-1;i++) if (s[i]=='"') wii=false;
                 if (s[s.size()-1]!='"') wii=false;
-                cout<< pal << " - "<< "String"<<endl;
+                if (wii)
+                {
+                    mapa[s]=Token(Token(33,"Valor",s));
+                    Tokens.push_back(mapa[s]);
+                }
+                else
+                {
+                    fclose(stdin);
+                    Tokens.clear();
+                    return Tokens;
+                }
             }
             else if(s[0]=='_' || (s[0]>='a' && s[0]<='z') || (s[0]>='A' && s[0]<='Z'))
             {
                 bool wii=true;
                 for(int i=1;i<s.length();i++)
                     if (!(s[i]=='_' || (s[i]>='a' && s[i]<='z') || (s[i]>='A' && s[i]<='Z') || (s[i]>='0' && s[i]<='9'))) wii=false;
-                if (wii) cout << s << " - "<< "Nombre de variable"<<endl;
-                else cout<<s<<"- Hubo un error"<<endl;
+                if (wii)
+                {
+                    mapa[s]=Token(1,"Identificador",s);
+                    Tokens.push_back(mapa[s]);
+                }
+                else
+                {
+                    fclose(stdin);
+                    Tokens.clear();
+                    return Tokens;
+                }
             }
             else if(s[0]>='0' && s[0]<='9')
             {
@@ -88,19 +115,33 @@ void AnalizadorSintactico::AnalizadorLexico(){
                     if(s[i]=='.') err++;
                 if (wii)
                 {
-                    if(err==0){
-                        cout << s << " - "<<"Numero"<<endl;
+                    if(err==0)
+                    {
+                        mapa[s]=Token(30,"Valor",s);
+                        Tokens.push_back(mapa[s]);
                     }
-                    else if(err==1){
-                        cout << s << " - " <<"Doble"<<endl;
+                    else if(err==1)
+                    {
+                        mapa[s]=Token(31,"Valor",s);
+                        Tokens.push_back(mapa[s]);
                     }
-                    else{
-                        cout << "Error"<<endl;
+                    else
+                    {
+                        fclose(stdin);
+                        Tokens.clear();
+                        return Tokens;
                     }
                     err = 0;
                 }
-                else cout << "Error"<<endl;
+                else
+                {
+                    fclose(stdin);
+                    Tokens.clear();
+                    return Tokens;
+                }
             }
         }
     }
+    fclose(stdin);
+    return Tokens;
 }
