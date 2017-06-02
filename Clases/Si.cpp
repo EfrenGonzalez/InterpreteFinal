@@ -29,7 +29,7 @@ bool Si::ejecutarSi(map<string,Token>& mapa,map<string,Variable>& tV,vector<Toke
             return true;
         }
         else{
-            cout << "Error con la condición del If" << endl;
+            cout << "Error con la condición del Si" << endl;
             return false;
         }
     }
