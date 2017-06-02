@@ -9,7 +9,7 @@ class Si
         virtual ~Si();
         void ejecutar();
         void imprimir();
-        void ejecutarSi(map<string,Token>&,map<string,Variable>&,vector<Token>&,int&);
+        bool ejecutarSi(map<string,Token>&,map<string,Variable>&,vector<Token>&,int&);
         Expresion exp;
     protected:
 
