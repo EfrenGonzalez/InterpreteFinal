@@ -10,9 +10,11 @@ class Impresion : public Instruccion
         Impresion();
         virtual ~Impresion();
         void ejecutar();
-        void imprimir(map<string,Token>& mapa,map<string,Variable>& tV,vector<Token>& Tokens,int& voy);
+        void imprimir();
+        void imprimir(map<string,Token>&,map<string,Variable>&,vector<Token>&,int&);
         map<string,Variable>::iterator it;
-        Expresion exp;
+        Token variable;
+        Token tipo;
     protected:
 
     private:
