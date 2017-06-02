@@ -39,6 +39,9 @@ double Double(string s)
     return aux;
 }
 
+void Expresion::ejecutar(vector<Token>& Tokens,int& voy){}
+void Expresion::imprimir(){};
+
 pair<bool,double> Expresion::Evaluar(map<string,Token>& mapa,map<string,Variable>& tV,vector<Token>& Tokens,int& voy)
 {
     map<string,int> pri;
@@ -50,8 +53,8 @@ pair<bool,double> Expresion::Evaluar(map<string,Token>& mapa,map<string,Variable
     pri["*"]=pri["/"]=6;
     pri["("]=pri[")"]=7;
 
-
-    while (Tokens[voy].Nombre!=";" && Tokens[voy].Nombre!=":") tE.push_back(Tokens[voy++]);
+    while (voy<Tokens.size() && Tokens[voy].Nombre!=";" && Tokens[voy].Nombre!=":") tE.push_back(Tokens[voy++]);
+    if (voy>=Tokens.size()) return Error();
 
     stack<pair<double, string> > st;
     queue<pair<double, string> > qu;
