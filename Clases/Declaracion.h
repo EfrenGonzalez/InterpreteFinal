@@ -3,6 +3,7 @@
 #include <bits/stdc++.h>
 #include "Instruccion.h"
 #include "Token.h"
+#include "Variable.h"
 
 class Declaracion : public Instruccion
 {
@@ -12,8 +13,8 @@ class Declaracion : public Instruccion
         Declaracion(Token,Token);
         void imprimir();
         void ejecutar();
-        map<string,pair<int,string> >::iterator it;
-        bool evaluar(map<string,Token>&,map<string,pair<int,string> >&,vector<Token>&,int&);
+        map<string,Variable>::iterator it;
+        bool evaluar(map<string,Token>&,map<string,Variable>&,vector<Token>&,int&);
         Token variable;
         Token tipo;
     protected:

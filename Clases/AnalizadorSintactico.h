@@ -2,6 +2,7 @@
 #define ANALIZADORSINTACTICO_H
 #include "Token.h"
 #include <bits/stdc++.h>
+#include "Variable.h"
 
 using namespace std;
 class AnalizadorSintactico
