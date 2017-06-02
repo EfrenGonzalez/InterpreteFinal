@@ -3,17 +3,16 @@
 #include "Instruccion.h"
 #include "Token.h"
 #include "Expresion.h"
+#include "Variable.h"
 #include <bits/stdc++.h>
 
 class Asignacion : public Instruccion
 {
     public:
-        map<string,pair<int,string> >::iterator it;
+        map<string,Variable>::iterator it;
         Asignacion();
         virtual ~Asignacion();
-        Token variable;
-        Expresion exp;
-        void asignar(pair<bool,double>& inst,map<string,pair<int,string> >& tV,vector<Token>& Tokens,int& voy);
+        bool asignar(map<string,Token>&,map<string,Variable>&,vector<Token>&,int&);
         void ejecutar();
     protected:
 
