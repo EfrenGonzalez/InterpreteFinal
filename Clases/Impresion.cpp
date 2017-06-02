@@ -1,5 +1,6 @@
 #include "Impresion.h"
 #include "Expresion.h"
+#include "Variable.h"
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -13,31 +14,29 @@ Impresion::~Impresion()
     //dtor
 }
 
-void Impresion::ejecutar() {
-
-}
-
-void Impresion::imprimir(map<string,Token>& mapa,map<string,Variable>& tV,vector<Token>& Tokens,int& voy)
+void Impresion::ejecutar()
 {
-    Expresion exp;
-    pair<bool,double> valor = exp.Evaluar(mapa,tV,Tokens,voy);
-    it = tV.find(variable.Nombre);
-    if (it != tV.end())
-    {
-        if (Tokens[voy].Nombre=="impresion"  && Tokens[voy+2].Nombre==";")
-        {
-            it=tV.find(variable.Nombre);
-            if (it!=tV.end()) { cout << "Error en la Impresion" << endl; return; }
-            if (tipo.Valor==20) cout << variable.Nombre << " " << valor.second;
-            else if (tipo.Valor==21) cout << variable.Nombre << " " << valor.second;
-            else if (tipo.Valor==22) cout << variable.Nombre << " " << valor.second;
-            else if (tipo.Valor==23) cout << variable.Nombre << " " << valor.second;
-            voy=voy+3;
-        }
-    }else{
-        cout << "Error la variable no se encuentra" << endl;
-    }
+
 }
 
-void Impresion::imprimir(){
+bool Impresion::imprimir(map<string,Token>& mapa,map<string,Variable>& tV,vector<Token>& Tokens,int& voy)
+{
+    if (tV[Tokens[voy+1].Nombre].Tipo==4 && Tokens[voy+2].Nombre==";")
+    {
+        cout<<tV[Tokens[voy+1].Nombre].ValorStr<<endl;
+        voy+=3;
+        return true;
+    }
+    if (Tokens[voy+1].Valor==34 && Tokens[voy+2].Nombre==";")
+    {
+        cout<<Tokens[voy+1].Nombre<<endl;
+        voy+=3;
+        return true;
+    }
+    voy+=1;
+    pair<bool,double> expR = exp.Evaluar(mapa,tV,Tokens,voy);
+    if (expR.first==false) return false;
+    cout<<expR.second<<endl;
+    voy++;
+    return true;
 }

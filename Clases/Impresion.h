@@ -1,5 +1,6 @@
 #ifndef IMPRESION_H
 #define IMPRESION_H
+#include "Variable.h"
 #include "Instruccion.h"
 #include "Expresion.h"
 #include <bits/stdc++.h>
@@ -10,11 +11,9 @@ class Impresion : public Instruccion
         Impresion();
         virtual ~Impresion();
         void ejecutar();
-        void imprimir();
-        void imprimir(map<string,Token>&,map<string,Variable>&,vector<Token>&,int&);
+        bool imprimir(map<string,Token>& mapa,map<string,Variable>& tV,vector<Token>& Tokens,int& voy);
         map<string,Variable>::iterator it;
-        Token variable;
-        Token tipo;
+        Expresion exp;
     protected:
 
     private:
