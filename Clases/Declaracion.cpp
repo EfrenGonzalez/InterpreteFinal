@@ -1,3 +1,4 @@
+#include "Variable.h"
 #include "Declaracion.h"
 #include <bits/stdc++.h>
 
@@ -16,7 +17,12 @@ void Declaracion::imprimir()
 
 }
 
-bool Declaracion::evaluar(map<string,Token>& mapa,map<string,pair<int,string> >& tV,vector<Token>& Tokens,int& voy)
+void Declaracion::ejecutar()
+{
+
+}
+
+bool Declaracion::evaluar(map<string,Token>& mapa,map<string,Variable>& tV,vector<Token>& Tokens,int& voy)
 {
     Tokens[voy]=tipo;
     Tokens[voy+1]=variable;
@@ -26,7 +32,10 @@ bool Declaracion::evaluar(map<string,Token>& mapa,map<string,pair<int,string> >&
         {
             it=tV.find(variable.Nombre);
             if (it!=tV.end()) return false;
-            tV[variable.Nombre]=make_pair(variable.Valor,"");
+            if (tipo.Valor==20) tV[variable.Nombre]=Variable(1,0.0,"");
+            else if (tipo.Valor==21) tV[variable.Nombre]=Variable(2,0.0,"");
+            else if (tipo.Valor==22) tV[variable.Nombre]=Variable(3,0.0,"");
+            else if (tipo.Valor==23) tV[variable.Nombre]=Variable(4,0.0,"");
             voy+=3;
             return true;
         }

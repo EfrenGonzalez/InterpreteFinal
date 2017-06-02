@@ -1,3 +1,4 @@
+#include "Variable.h"
 #include "Instruccion.h"
 
 Instruccion::Instruccion()

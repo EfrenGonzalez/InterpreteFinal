@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #include "Token.h"
+#include "Variable.h"
 
 Token::Token()
 {

@@ -1,3 +1,4 @@
+#include "Variable.h"
 #include "Expresion.h"
 #include "Token.h"
 #include "Instruccion.h"
@@ -15,12 +16,30 @@ Expresion::~Expresion()
     //dtor
 }
 
-pair<bool,int> Error()
+pair<bool,double> Error()
 {
     return make_pair(false,0.0);
 }
 
-pair<bool,double> Expresion::Evaluar(map<string,Token>& mapa,map<string,pair<int,string> >& tV,vector<Token>& Tokens,int& voy)
+double Double(string s)
+{
+    int i;
+    double aux=0;
+    double pot=.1;
+    for (i=0;i<s.size() && s[i]!='.';i++)
+    {
+        aux*=10;
+        aux+=s[i]-'0';
+    }
+    for (i=i+1;i<s.size();i++)
+    {
+        aux+=(s[i]-'0')*pot;
+        pot*=.1;
+    }
+    return aux;
+}
+
+pair<bool,double> Expresion::Evaluar(map<string,Token>& mapa,map<string,Variable>& tV,vector<Token>& Tokens,int& voy)
 {
     map<string,int> pri;
     pri["||"]=1;
@@ -33,7 +52,6 @@ pair<bool,double> Expresion::Evaluar(map<string,Token>& mapa,map<string,pair<int
 
 
     while (Tokens[voy].Nombre!=";" && Tokens[voy].Nombre!=":") tE.push_back(Tokens[voy++]);
-    voy++;
 
     stack<pair<double, string> > st;
     queue<pair<double, string> > qu;
@@ -43,9 +61,16 @@ pair<bool,double> Expresion::Evaluar(map<string,Token>& mapa,map<string,pair<int
     //Posfija
     for (int i=0;i<tE.size();i++)
     {
-        if (tE[i].Valor==30 || tE[i].Valor==31) qu.push(make_pair(tE[i].Valor,"_"));
-        else if (tE[i].Valor==32) qu.push(make_pair(0.0,"_"));
-        else if (tE[i].Valor==33) qu.push(make_pair(1.0,"_"));
+        if (tE[i].Valor==1)
+        {
+            it=tV.find(tE[i].Nombre);
+            if (it!=tV.end()) return Error();
+            else if (tV[tE[i].Nombre].Tipo>3 || tV[tE[i].Nombre].Tipo<1) return Error();
+            else qu.push(make_pair(tV[tE[i].Nombre].ValorNum,""));
+        }
+        else if (tE[i].Valor==30 || tE[i].Valor==31) qu.push(make_pair(Double(tE[i].Nombre),""));
+        else if (tE[i].Valor==32) qu.push(make_pair(0.0,""));
+        else if (tE[i].Valor==33) qu.push(make_pair(1.0,""));
         else if (tE[i].Valor==6 || tE[i].Valor==7 || tE[i].Valor==8)
         {
             while (!st.empty() && pri[st.top().second]>tE[i].Valor)

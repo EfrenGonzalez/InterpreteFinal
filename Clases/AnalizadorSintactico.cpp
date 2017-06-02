@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #include "AnalizadorSintactico.h"
 #include "Token.h"
+#include "Variable.h"
 
 map<string,Token> AnalizadorSintactico::mapa;
 AnalizadorSintactico::AnalizadorSintactico() {
@@ -25,12 +26,12 @@ void AnalizadorSintactico::declarar() {
     mapa["falso"]=Token(33,"Valor","falso");
 
     mapa["entero"]=Token(20,"Tipo de dato","entero");
-    mapa["boleano"]=Token(22,"Tipo de dato","boleano");
     mapa["flotante"]=Token(21,"Tipo de dato","flotante");
+    mapa["boleano"]=Token(22,"Tipo de dato","boleano");
     mapa["cadena"]=Token(23,"Tipo de dato","cadena");
 
-    mapa["imprimir"]=Token(1,"Identificador","imprimir");
-    mapa["leer"]=Token(2,"Identificador","leer");
+    mapa["imprimir"]=Token(2,"Identificador","imprimir");
+    mapa["leer"]=Token(3,"Identificador","leer");
 
     mapa["+"]=Token(7,"Operador Aritmetico","+");
     mapa["-"]=Token(7,"Operador Aritmetico","-");
@@ -39,7 +40,7 @@ void AnalizadorSintactico::declarar() {
     mapa["="]=Token(6,"Operador Logico","=");
     mapa["<"]=Token(6,"Operador Logico","<");
     mapa[">"]=Token(6,"Operador Logico",">");
-    mapa["!"]=Token(6,"Operador Logico","!");
+    mapa["!"]=Token(6,"Operador Logico","!"); //:)
     mapa["&"]=Token(7,"Operador Aritmetico","&");
     mapa["|"]=Token(7,"Operador Aritmetico","|");
     mapa["^"]=Token(7,"Operador Aritmetico","^");
@@ -51,7 +52,7 @@ void AnalizadorSintactico::declarar() {
     mapa["!="]=Token(8,"Operador Relacional","!=");
     mapa[":"]=Token(8,"Operador Relacional",":");
 
-    mapa[";"]=Token(5,"AgrupaciÃ³n",";");
+    mapa[";"]=Token(5,"Agrupación",";");
 
     mapa["("] = Token(5,"Agrupacion","(");
     mapa[")"] = Token(5,"Agrupacion",")");
@@ -79,7 +80,7 @@ vector<Token> AnalizadorSintactico::VectorSintatico(string archivo)
                 if (s[s.size()-1]!='"') wii=false;
                 if (wii)
                 {
-                    mapa[s]=Token(Token(33,"Valor",s));
+                    mapa[s]=Token(34,"Valor",s);
                     Tokens.push_back(mapa[s]);
                 }
                 else
